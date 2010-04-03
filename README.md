@@ -1,8 +1,7 @@
-
 citeusync.pl
 ===========
 
-A simple script to download your bibtex library from citeulike along with your personal PDFs. PDFs are named according to the citeulike record number, and a Local-Url field is added so that Bibdesk (and others?) can locate the files.
+A simple script to download your bibtex library from citeulike along with your personal PDFs. PDFs are named according to the citeulike record number, and a file{} field is added so that JabRef can locate the files.
 
 Config
 ------
