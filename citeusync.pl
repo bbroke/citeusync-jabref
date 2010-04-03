@@ -14,7 +14,7 @@ $save_folder = $data[2];
 
 my $mech = WWW::Mechanize->new();
 $mech->get("http://www.citeulike.org/login");
-print "Logging in...";
+print "Logging in ... ";
 $mech->submit_form(
     form_name => 'frm',
     fields    => { username => $username, password => $password },
@@ -55,7 +55,7 @@ foreach $link (@links) {
     }
     else {
         $files = $files . $article_id . ".pdf";
-        print("Fetching $link...");
+        print("Fetching $link ...");
         $mech->get($link);
         if ( $mech->success() ) {
             print "OK.\n";
@@ -74,12 +74,12 @@ foreach $bib (@bibs) {
     $bib =~ /citeulike-article-id\s+=\s+\{([0-9]*)\}/i;
     my $article_id = $1;
     if ( $files =~ /$article_id/ ) {
-        my $url = "file://localhost$save_folder/$article_id.pdf";
-        if ( $bib =~ /local-url/i ) {
-            $bib =~ s/local-url.*}/Local-Url = {$url}/ig;
+    		my $url = "citeulikepdf:$article_id.pdf:PDF";
+        if ( $bib =~ /file/i ) {
+            $bib =~ s/file.*}/file = {$url}/ig;
         }
         else {
-            $bib =~ s/}\s+$/,\n Local-Url = {$url}}/g;
+            $bib =~ s/}\s+$/,\n file = {$url}}/g;
         }
     }
 }
@@ -87,4 +87,3 @@ foreach $bib (@bibs) {
 open( FILE, "> $save_folder/$username.bib" );
 print FILE join( "\n@", @bibs );
 close(FILE);
-
